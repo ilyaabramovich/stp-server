@@ -13,17 +13,42 @@ var connection = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "",
-  database: "test"
+  database: "testso"
 });
 
 app.post("/questions", function(req, res) {
-  connection.query("SELECT * FROM QUESTION", function(err, result) {
+    var result = [];
+    let str = `SELECT c.name as part, s.name as sections, p.name as subsections, u.name as title, 
+                u.difficulty as Complexity, u.hint as description_unit, q.name as text, 
+                q.hint as description_question, q.typeAnwer as typeAnswer, q.answer as checker 
+                FROM chapter c
+                INNER JOIN section s ON s.chapterId=c.id
+                INNER JOIN paragpaph p ON p.sectionId=s.id
+                INNER JOIN unit u ON u.paragraphId=p.id
+                INNER JOIN question q ON q.unitId=u.id
+                WHERE c.name=? AND s.name=? AND p.name=?`;
+  connection.query(str,["Комбинаторика","Выборки","Правило суммы и произведения"], function(err, rows) {//параметры для тестирования
     if (err) throw err;
+      rows.forEach(row => {
+          result.push({
+              part: row.part,
+              sections: row.sections,
+              subsections: row.subsections,
+              Complexity: row.Complexity,
+              type: row.type,
+              description_unit: row.description_unit,
+              text: row.text,
+              description_question: row.description_question,
+              typeAnswer: row.typeAnswer,
+              checker: row.checker
+          });
+      });
     console.log(result);
-    res.send("Questions: " + result);
+    res.send(JSON.stringify(result));
   });
 });
 
 app.listen(3000, function() {
   console.log("Example app listening on port 3000!");
 });
+
