@@ -1,10 +1,14 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var mysql = require("mysql");
+var cors = require("cors");
 var fs = require("fs");
+var morgan = require("morgan");
 
 var app = express();
 app.use(bodyParser.json());
+app.use(morgan("combined"));
+app.use(cors());
 
 app.get("/", function(req, res) {
   res.send("Hello World!");
@@ -13,7 +17,7 @@ app.get("/", function(req, res) {
 var connection = mysql.createConnection({
   host: "localhost",
   user: "root",
-  port: '3306',
+  port: "3306",
   password: "",
   database: "testso"
 });
@@ -31,7 +35,7 @@ app.get("/questions", function(req, res) {
                 WHERE c.name=? AND s.name=? AND p.name=? AND u.difficulty=?`;
   connection.query(
     str,
-    ["Комбинаторика", "Выборки", "Правило суммы и произведения",1],
+    ["Комбинаторика", "Выборки", "Правило суммы и произведения", 1],
     function(err, rows) {
       //параметры для тестирования
       if (err) throw err;
@@ -41,12 +45,15 @@ app.get("/questions", function(req, res) {
         });
       });
       console.log(result);
-      var answer =  {
-        'questions': result
-      }
+      var answer = {
+        questions: result
+      };
       var json = JSON.stringify(answer, null, 2);
-      json = json.replace('/&/g', '&amp;').replace('/</g', '&lt;').replace('/>/g', '&gt;');
-      fs.writeFileSync('questions.json', json);
+      json = json
+        .replace("/&/g", "&amp;")
+        .replace("/</g", "&lt;")
+        .replace("/>/g", "&gt;");
+      fs.writeFileSync("questions.json", json);
       // res.send();
     }
   );
@@ -55,4 +62,3 @@ app.get("/questions", function(req, res) {
 app.listen(3000, function() {
   console.log("Example app listening on port 3000!");
 });
-
