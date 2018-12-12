@@ -12,4 +12,17 @@ router.get("/", (req, res) => {
   });
 });
 //Add units
+router.post("/", (req, res) => {
+  const {name, paragraphId, difficulty, hint} = req.body.data;
+  db.query(
+    "INSERT INTO unit (name, paragraphId, difficulty, hint) VALUES (?,?,?,?)",
+    [name,paragraphId,difficulty,hint],
+    (err, result) => {
+      if (err) {
+        throw err;
+      }
+      res.send(result);
+    }
+  );
+});
 module.exports = router;

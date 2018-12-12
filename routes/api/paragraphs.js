@@ -4,12 +4,25 @@ const router = express.Router();
 
 //Get paragraphs
 router.get("/", (req, res) => {
-  db.query("SELECT p.id,p.name FROM paragraph AS p WHERE p.sectionId=?",[req.query.sectionId],(err, rows) => {
+  db.query("SELECT p.id,p.name FROM paragraph AS p WHERE p.sectionId=?",[req.query.sectionId],(err, result) => {
     if (err) {
       throw err;
-    }
-    res.send(rows);
+    } 
+    res.send(result);
   });
 });
 //Add paragraphs
+router.post("/", (req, res) => {
+  const {name, sectionId} = req.body.data;
+  db.query(
+    "INSERT INTO paragraph (name, sectionId) VALUES (?,?)",
+    [name,sectionId],
+    (err, result) => {
+      if (err) {
+        throw err;
+      }
+      res.send(result); 
+    }
+  );
+});
 module.exports = router;
