@@ -4,19 +4,23 @@ const router = express.Router();
 
 //Get units
 router.get("/", (req, res) => {
-  db.query("SELECT * FROM unit AS u WHERE u.paragraphId=?",[req.query.paragraphId],(err, rows) => {
-    if (err) {
-      throw err;
+  db.query(
+    "SELECT * FROM unit AS u WHERE u.paragraphId=?",
+    [req.query.paragraphId],
+    (err, result) => {
+      if (err) {
+        throw err;
+      }
+      res.send(result);
     }
-    res.send(rows);
-  });
+  );
 });
 //Add units
 router.post("/", (req, res) => {
-  const {name, paragraphId, difficulty, hint} = req.body.data;
+  const { name, paragraphId, difficulty, hint } = req.body.data;
   db.query(
     "INSERT INTO unit (name, paragraphId, difficulty, hint) VALUES (?,?,?,?)",
-    [name,paragraphId,difficulty,hint],
+    [name, paragraphId, difficulty, hint],
     (err, result) => {
       if (err) {
         throw err;
