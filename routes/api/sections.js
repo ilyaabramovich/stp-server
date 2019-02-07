@@ -11,9 +11,9 @@ router.get("/", (req, res) => {
     res.send(result);
   });
 });
-//Add sections 
+//Add sections
 router.post("/", (req, res) => {
-  const {name, chapterId} = req.body.data;
+  const {name, chapterId} = req.body;
   db.query(
     "INSERT INTO section (name, chapterId) VALUES (?,?)",
     [name,chapterId],

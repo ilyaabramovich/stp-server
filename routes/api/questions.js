@@ -33,7 +33,7 @@ router.get("/", (req, res) => {
 
 //Add question
 router.post("/", (req, res) => {
-  const { name, hint, unitId, typeAnswer, answer } = req.body.data;
+  const { name, hint, unitId, typeAnswer, answer } = req.body;
   db.query(
     "INSERT INTO question (name, hint, unitId, typeAnswer, answer) VALUES ( ?, ?, ?, ?, ?)",
     [name, hint, unitId, typeAnswer, answer],

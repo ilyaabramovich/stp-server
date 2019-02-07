@@ -17,7 +17,7 @@ router.get("/", (req, res) => {
 });
 //Add units
 router.post("/", (req, res) => {
-  const { name, paragraphId, difficulty, hint } = req.body.data;
+  const { name, paragraphId, difficulty, hint } = req.body;
   db.query(
     "INSERT INTO unit (name, paragraphId, difficulty, hint) VALUES (?,?,?,?)",
     [name, paragraphId, difficulty, hint],
