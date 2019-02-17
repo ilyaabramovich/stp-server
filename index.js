@@ -9,8 +9,7 @@ const sections = require("./routes/api/sections");
 const paragraphs = require("./routes/api/paragraphs");
 const units = require("./routes/api/units");
 const questions = require("./routes/api/questions");
-
-const db = require("./db")
+const tests = require("./routes/api/tests");
 
 const app = express();
 app.use(bodyParser.json());
@@ -22,6 +21,7 @@ app.use("/api/paragraphs", paragraphs);
 app.use("/api/sections", sections);
 app.use("/api/units", units);
 app.use("/api/questions", questions);
+app.use("/api/tests", tests);
 
 app.get("/", function(req, res) {
   res.send("Hello World!");
@@ -29,6 +29,6 @@ app.get("/", function(req, res) {
 
 const { PORT } = process.env || 3000;
 
-app.listen(PORT, function() {
+app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
 });
