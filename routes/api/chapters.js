@@ -15,7 +15,7 @@ router.get("/", (req, res) => {
 router.post("/", (req, res) => {
   db.query(
     "INSERT INTO chapter (name) VALUES (?)",
-    [req.body.name],
+    req.body.name,
     (err, result) => {
       if (err) {
         throw err;

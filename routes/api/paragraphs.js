@@ -6,7 +6,7 @@ const router = express.Router();
 router.get("/", (req, res) => {
   db.query(
     "SELECT p.id,p.name FROM paragraph AS p WHERE p.sectionId=?",
-    [req.query.sectionId],
+    req.query.sectionId,
     (err, result) => {
       if (err) {
         throw err;

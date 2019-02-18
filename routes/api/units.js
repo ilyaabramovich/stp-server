@@ -6,7 +6,7 @@ const router = express.Router();
 router.get("/", (req, res) => {
   db.query(
     "SELECT * FROM unit AS u WHERE u.paragraphId=?",
-    [req.query.paragraphId],
+    req.query.paragraphId,
     (err, result) => {
       if (err) {
         throw err;
