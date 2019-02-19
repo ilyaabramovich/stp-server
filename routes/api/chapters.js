@@ -4,7 +4,7 @@ const router = express.Router();
 
 //Get chapters
 router.get("/", (req, res) => {
-  db.query("SELECT c.id,c.name FROM chapter AS c", (err, result) => {
+  db.query("SELECT * FROM chapter", (err, result) => {
     if (err) {
       throw err;
     }
