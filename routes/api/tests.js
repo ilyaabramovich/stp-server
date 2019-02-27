@@ -1,10 +1,10 @@
-const express = require("express");
-const db = require("../../db");
-const fs = require("fs");
-const router = express.Router();
+const express = require('express')
+const db = require('../../db')
+const fs = require('fs')
+const router = express.Router()
 
-//Get questions
-router.get("/", (req, res) => {
+// Get questions
+router.get('/', (req, res) => {
   const str = `SELECT c.name as part, s.name as sections, p.name as subsections,
                 u.difficulty as Complexity, u.name as type, q.name as text,
                 q.typeAnswer as typeAnswer,q.answer as checker, q.hint as description
@@ -12,9 +12,9 @@ router.get("/", (req, res) => {
                 INNER JOIN section s ON s.chapterId=c.id
                 INNER JOIN paragraph p ON p.sectionId=s.id
                 INNER JOIN unit u ON u.paragraphId=p.id
-                INNER JOIN question q ON q.unitId=u.id`;
-  db.query(str, function(err, result) {
-    if (err) throw err;
+                INNER JOIN question q ON q.unitId=u.id`
+  db.query(str, function (err, result) {
+    if (err) throw err
 
     const json = JSON.stringify(
       {
@@ -23,11 +23,11 @@ router.get("/", (req, res) => {
       null,
       2
     )
-      .replace("/&/g", "&amp;")
-      .replace("/</g", "&lt;")
-      .replace("/>/g", "&gt;");
-    fs.writeFileSync("questions.json", json);
-    res.send(result);
-  });
-});
-module.exports = router;
+      .replace('/&/g', '&amp;')
+      .replace('/</g', '&lt;')
+      .replace('/>/g', '&gt;')
+    fs.writeFileSync('questions.json', json)
+    res.send(result)
+  })
+})
+module.exports = router
