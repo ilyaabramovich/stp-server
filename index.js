@@ -16,6 +16,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(morgan('combined'))
 app.use(cors())
+
 app.use('/api/chapters', chapters)
 app.use('/api/paragraphs', paragraphs)
 app.use('/api/sections', sections)
