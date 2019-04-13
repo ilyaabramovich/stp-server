@@ -4,9 +4,9 @@ const router = express.Router()
 
 // Get sections
 router.get('/', (req, res) => {
+  const { chapterId } = req.query
   db.query(
-    'SELECT s.id,s.name FROM section AS s WHERE s.chapterId=?',
-    req.query.chapterId,
+    'SELECT s.id,s.name FROM section AS s WHERE s.chapterId=?', chapterId,
     (err, result) => {
       if (err) {
         throw err

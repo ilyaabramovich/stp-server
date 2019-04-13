@@ -4,9 +4,10 @@ const router = express.Router()
 
 // Get paragraphs
 router.get('/', (req, res) => {
+  const { sectionId } = req.query
   db.query(
     'SELECT p.id,p.name FROM paragraph AS p WHERE p.sectionId=?',
-    req.query.sectionId,
+    sectionId,
     (err, result) => {
       if (err) {
         throw err

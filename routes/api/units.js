@@ -4,9 +4,10 @@ const router = express.Router()
 
 // Get units
 router.get('/', (req, res) => {
+  const { paragraphId } = req.query
   db.query(
     'SELECT * FROM unit AS u WHERE u.paragraphId=?',
-    req.query.paragraphId,
+    paragraphId,
     (err, result) => {
       if (err) {
         throw err
