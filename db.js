@@ -1,20 +1,15 @@
 const mysql = require('mysql')
 
-const connection = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  port: process.env.DB_PORT,
-  password: process.env.DB_PASS,
-  database: process.env.DB_NAME
+const pool = mysql.createPool({
+  host: process.env.MYSQL_HOST,
+  user: process.env.MYSQL_USER,
+  port: process.env.MYSQL_PORT,
+  password: process.env.MYSQL_PASSWORD,
+  database: process.env.MYSQL_DATABASE
 })
 
-connection.connect(function (err) {
-  if (err) {
-    console.error('error connecting: ' + err.stack)
-    return
+module.exports = {
+  query: (query, params, callback) => {
+    return pool.query(query, params, callback)
   }
-
-  console.log('connected as id ' + connection.threadId)
-})
-
-module.exports = connection
+}

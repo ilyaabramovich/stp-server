@@ -1,5 +1,4 @@
 const express = require('express')
-const bodyParser = require('body-parser')
 const cors = require('cors')
 const morgan = require('morgan')
 require('dotenv').config()
@@ -12,8 +11,8 @@ const questions = require('./routes/questions')
 const tests = require('./routes/tests')
 
 const app = express()
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
 app.use(morgan('combined'))
 app.use(cors())
 
@@ -28,8 +27,8 @@ app.get('/', function (req, res) {
   res.send('Hello World!')
 })
 
-const { PORT } = process.env || 3000
+const port = process.env.PORT || 3000
 
-app.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}!`)
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}!`)
 })
